@@ -1,0 +1,44 @@
+:root {
+    --faded-blue: #80b0ca;
+    --bold-blue: #004e78;
+    --navbar: #f5f5f5;
+    --bright-blue: #bbf2f2;
+}
+
+.jumbotron {
+    background: url('../img/main.png') center center no-repeat;
+    background-size: cover;
+}
+
+.jumbotron .row {
+    min-height: 50vh;
+}
+.box {
+    background-color: var(--bright-blue);
+    border-radius: 15px;
+    padding: 2rem;
+}
+
+#circle {
+    width: 250px !important;
+    height: 250px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background: var(--faded-blue);
+    padding: 1rem;
+  }
+
+.img-container {
+    max-height: 500px;
+    overflow: hidden;
+}
+
+.card img {
+    overflow: hidden;
+}
+
+.card {
+    border-radius: 20px;
+    overflow: hidden;
+}

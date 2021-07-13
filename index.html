@@ -1,91 +1,328 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
-		
-		<link rel="preconnect" href="https://fonts.gstatic.com">
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
-		
-        <link rel="stylesheet" href="./css/detect.css">
-		<title>MaskUp - Detect</title>
-	</head>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
 
-	<body>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <title>MaskUp</title>
+</head>
+
+<body>
 
 
-		<nav class="navbar navbar-expand-md navbar-light">
-            <a class="navbar-brand bold-blue" href="#" style="font-size: 1.6rem">
-                <img src="./img/logo.png" alt="MaskUp Logo" width="80" height="80">
-                MaskUp
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarText">
-              <ul class="navbar-nav">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Detect <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Group</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Get Notified</a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-
-          <section class="detection-model">
-            <div class="jumbotron jumbotron-fluid">
-                <div class="container text-center">
-                  <div class="content">
-                      <h1 class="bold-blue">Mask Detection</h1>
-                    <div id="webcam-container">
-                        <img src="./img/phCamera.png" alt="placeholder" class="img-fluid" id="placeholder-img">
-                    </div>
-    <div id="label-container">
-        <h3 id="result" class="mt-3 bold-blue">loading...</h3>
+  <nav class="navbar navbar-expand-md navbar-light">
+    <a class="navbar-brand bold-blue" href="index.html" style="font-size: 1.6rem">
+      <img src="./img/logo.png" alt="MaskUp Logo" width="80" height="80">
+      MaskUp
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarText">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="detect.html">Detect <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Group</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Get Notified</a>
+        </li>
+      </ul>
     </div>
-    <!-- <button type="button" onclick="init()">Start</button> -->
-                  </div>
-                </div>
-              </div>
-          </section>
+  </nav>
 
-		
-		<section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-8 bold-blue">
-                        <h3 class="bold">How does our detection model work?</h3>
-                     <p class="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only</p>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="box d-flex align-items-center justify-content-center">
-                            <img src="./img/virus.png" alt="virus image" class="img-fluid">
-                         </div>
-                    </div>
-                </div>
+  <section class="main">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container text-center">
+
+        <div class="row">
+          <div class="col-sm-7 d-flex align-items-center">
+            <h1 class="bold-blue display-3" id="covid-title">185 million cases <br>4.03 million deaths.</h1>
+          </div>
+          <div class="col-sm-5 d-flex align-items-center justify-content-center">
+            <div id="circle" class="d-flex align-items-center justify-content-center shadow-transparent">
+              <img src="./img/logo.png" alt="logo" class="img-fluid">
             </div>
-        </section>
-		
-        <div class="separator"></div>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 bold-blue">
+          <h3 class="bold-blue">What is MaskUp?</h3>
+          <p class="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+            into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+            release of Letraset sheets containing Lorem. Lorem Ipsum has been the industry's standard dummy text ever
+            since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen
+            book. It has survived not only</p>
+        </div>
+        <div class="col-sm-4">
+          <div class="box d-flex align-items-center justify-content-center shadow-grey">
+            <img src="./img/virus.png" alt="virus image" class="img-fluid">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="separator"></div>
+
+  <section>
+    <div class="container">
+      <h1 class="text-center">MaskUp Team</h1>
+      <p class="lead text-center">MaskUp was created in Summer 2021</p>
+
+      <div class="row row-cols-2 row-cols-md-2">
+        <div class="col mb-4">
+          <div class="card">
+            <div class="img-container d-flex align-items-center">
+              <img src="./img/ganning.jpeg" class="card-img-top" alt="Ganning Xu">
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title font-weight-bolder">Ganning Xu</h5>
+              <p class="card-text font-italic">High School Junior</p>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. At libero ex nihil dolorum deserunt adipisci vitae non nostrum fuga ipsa. Lorem ipsum dolor sit amet, consectetur adipisicing elit. At libero ex nihil dolorum deserunt adipisci vitae non nostrum fuga ipsa.</p>
+
+            </div>
+            <button type="button" class="btn hover-effect faded-blue-hover mb-2" data-toggle="modal"
+              data-target="#ganningMore">About Me</button>
+
+          </div>
+        </div>
+
+        <div class="col mb-4">
+          <div class="card">
+            <div class="img-container d-flex align-items-center">
+              <img src="./img/ganning.jpeg" class="card-img-top" alt="Ganning Xu">
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title font-weight-bolder">Ganning Xu</h5>
+              <p class="card-text font-italic">High School Junior</p>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. At libero ex nihil dolorum deserunt adipisci vitae non nostrum fuga ipsa. Lorem ipsum dolor sit amet, consectetur adipisicing elit. At libero ex nihil dolorum deserunt adipisci vitae non nostrum fuga ipsa.</p>
+
+            </div>
+            <button type="button" class="btn hover-effect faded-blue-hover mb-2" data-toggle="modal"
+              data-target="#ganningMore">About Me</button>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <div class="separator"></div>
+
+<section>
+  <div class="container">
+    <h1 class="text-center">Contact Us</h1>
+    <form>
+      <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="First name" name="firstname" required>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Last name" name="lastname" required>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <textarea class="form-control" id="validationTextarea" placeholder="Message" name="message" required></textarea>
+      </div>
+
+      <div class="text-center mt-3">
+        <input type="submit" class="btn hover-effect faded-blue-hover mx-auto">
+      </div>
+    </form>
+  </div>
+</section>
+
+<div class="separator"></div>
+
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted">
+  <!-- Section: Social media -->
+  <section
+    class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
+  >
+    <!-- Left -->
+    <div class="me-5 d-none d-lg-block">
+      <span>Get connected with us on social networks:</span>
+    </div>
+    <!-- Left -->
+
+    <!-- Right -->
+    <div>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-google"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="" class="me-4 text-reset">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <!-- Right -->
+  </section>
+  <!-- Section: Social media -->
+
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-gem me-3"></i>Company name
+          </h6>
+          <p>
+            Here you can use rows and columns to organize your footer content. Lorem ipsum
+            dolor sit amet, consectetur adipisicing elit.
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Products
+          </h6>
+          <p>
+            <a href="#!" class="text-reset">Angular</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">React</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Vue</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Laravel</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Useful links
+          </h6>
+          <p>
+            <a href="#!" class="text-reset">Pricing</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Settings</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Orders</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Help</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Contact
+          </h6>
+          <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+          <p>
+            <i class="fas fa-envelope me-3"></i>
+            info@example.com
+          </p>
+          <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+          <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2021 Copyright:
+    <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
 
 
-		<!-- Google teachable machine code -->
+  <!-- [DO NOT EDIT BELOW] modals -->
 
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
-		<script src="./js/detection.js"></script>
+  <div class="modal fade" id="ganningMore" tabindex="-1" aria-labelledby="ganningModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="ganningModalLabel">Ganning</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5>About</h5>
+          <ul class="about list-unstyled">
+            <li><p><span class="font-weight-bold text-reset">Pronouns: </span>He/Him</p></li>
+            <li><p><span class="font-weight-bold text-reset">Hobbies: </span>Swimming, coding, eating.</p></li>
+            <li><p><span class="font-weight-bold">Why MaskUp: </span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, voluptas fugiat obcaecati corporis eius aliquam necessitatibus fugit inventore quo. Odio eius aspernatur alias laborum libero, asperiores fuga consequuntur magnam voluptates.</p></li>
+        </ul>
+        <h5>Contact</h5>
+        <ul class="about list-unstyled">
+          <li><p><span class="font-weight-bold text-reset">Email: </span>ganningxu@gmail.com</p></li>
+          <li><p><span class="font-weight-bold text-reset">Instagram: </span>@ganning_xu</p></li>
+        </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn hover-effect faded-blue-hover" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.7/js/tether.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./js/covid.js"></script>
 
-		
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.7/js/tether.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-
-	</body>
+</body>
 
 </html>

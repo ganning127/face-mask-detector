@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Asap:wght@400;600;700&display=swap');
+
+:root {
+    --faded-blue: #80b0ca;
+    --bold-blue: #004e78;
+    --navbar: #f5f5f5;
+    --bright-blue: #bbf2f2;
+}
+
+body {
+    font-family: 'Asap', sans-serif;
+}
+
+.f {
+    border: 2px solid var(--blue);
+}
+
+.navbar {
+    background-color: var(--navbar) !important;
+}
+
+nav li a {
+    font-size: 1.6rem;
+    color: var(--faded-blue) !important;
+}
+
+.active a {
+    color: var(--bold-blue) !important;
+}
+
+.bold-blue {
+    color: var(--bold-blue) !important;
+    font-weight: 600;
+}
+
+.shadow-grey {
+    filter: drop-shadow(10px 10px 2px lightgrey);
+}
+
+.shadow-blue {
+    box-shadow: 3px 3px 5px 6px #80b0ca;
+}
+
+.separator {
+    height: 10rem;
+}
+
+.hover-effect  {
+    background-color: transparent;
+      margin: 0rem auto 0 auto;
+      text-align: center;
+      border-radius: 20px;
+      min-width: 200px;
+      font-size: 1.3rem;
+      text-decoration: none;
+      padding: 0.5rem 1rem 0.5rem 1rem;
+      letter-spacing: 2px;
+      transition: all .25s;
+  }
+  
+  .hover-effect:hover  {
+      letter-spacing: 5px;
+  }
+
+  .faded-blue-hover {
+    border: 2px solid var(--faded-blue);
+    color: var(--faded-blue);
+    font-size: 1rem;
+    min-width: 50px;
+  }
+  
+  .faded-blue-hover:hover {
+    background-color: var(--faded-blue);;
+    color: white;
+  }
+
