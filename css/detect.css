@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Asap&display=swap');
+
+:root {
+    --faded-blue: #80b0ca;
+    --bold-blue: #004e78;
+}
+
+body {
+    font-family: 'Asap', sans-serif;
+}
+
+.f {
+    border: 2px solid var(--blue);
+}
+
+.navbar {
+    background-color: #f5f5f5 !important;
+}
+
+nav li a {
+    font-size: 1.6rem;
+    color: var(--faded-blue) !important;
+}
+
+.active a {
+    color: var(--bold-blue) !important;
+}
+
+.bold-blue {
+    color: var(--bold-blue) !important;
+}
+
+canvas {
+    border-radius: 50%;
+}
+
+#placeholder-img {
+    border-radius: 50%;
+    height: 350px;
+}
+
+.jumbotron {
+    background-color: #99d3df !important;
+}

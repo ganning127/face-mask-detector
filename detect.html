@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
+		
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+		
+        <link rel="stylesheet" href="./css/detect.css">
+		<title>MaskUp - Detect</title>
+	</head>
+
+	<body>
+
+
+		<nav class="navbar navbar-expand-md navbar-light">
+            <a class="navbar-brand bold-blue" href="#" style="font-size: 1.6rem">
+                <img src="./img/logo.png" alt="MaskUp Logo" width="80" height="80">
+                MaskUp
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarText">
+              <ul class="navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">Detect <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Group</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Get Notified</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <section class="detection-model">
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container text-center">
+                  <div class="content">
+                      <h1 class="bold-blue">Mask Detection</h1>
+                    <div id="webcam-container">
+                        <img src="./img/phCamera.png" alt="placeholder" class="img-fluid" id="placeholder-img">
+                    </div>
+    <div id="label-container">
+        <h3 id="result" class="mt-3 bold-blue">loading...</h3>
+    </div>
+    <!-- <button type="button" onclick="init()">Start</button> -->
+                  </div>
+                </div>
+              </div>
+          </section>
+
+		
+		
+		
+
+
+		<!-- Google teachable machine code -->
+
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+		<script type="text/javascript">
+        
+			const URL = "https://teachablemachine.withgoogle.com/models/lccjUR36W/";
+
+            let resultToMessage = {
+                "nomask": "No mask detected ⚠️",
+                "mask": "Mask Detected ✅"
+            }
+
+			let model, webcam, labelContainer, maxPredictions;
+
+			async function init() {
+				const modelURL = URL + "model.json";
+				const metadataURL = URL + "metadata.json";
+
+				model = await tmImage.load(modelURL, metadataURL);
+				maxPredictions = model.getTotalClasses();
+
+				const flip = true;
+				webcam = new tmImage.Webcam(350, 350, flip);
+				await webcam.setup();
+				await webcam.play();
+				window.requestAnimationFrame(loop);
+
+                document.getElementById("placeholder-img").remove()
+				document.getElementById("webcam-container")
+					.appendChild(webcam.canvas);
+
+				labelContainer = document.getElementById("label-container");
+				for (let i = 0; i < maxPredictions; i++) {
+					labelContainer.appendChild(document.createElement("div"));
+				}
+			}
+
+			async function loop() {
+				webcam.update();
+				await predict();
+				window.requestAnimationFrame(loop);
+			}
+
+			// run the webcam image through the image model
+			async function predict() {
+				// predict can take in an image, video or canvas html element
+				const prediction = await model.predict(webcam.canvas);
+                console.log(prediction)
+                let highestPoss = determineDom(prediction)
+                // let highestPoss = determineDom(prediction);
+				document.getElementById("result").innerHTML = resultToMessage[highestPoss];
+			}
+
+            function determineDom(arr) {
+                let maxValue = 0;
+                let maxPrediction;
+
+                for (var i=0; i< arr.length; i++) {
+                    if (arr[i].probability > maxValue) {
+                        maxValue = arr[i].probability;
+                        maxPrediction = arr[i].className;
+                    }
+                }
+                return maxPrediction
+            }
+
+            init();
+		</script>
+
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.7/js/tether.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+	</body>
+
+</html>
