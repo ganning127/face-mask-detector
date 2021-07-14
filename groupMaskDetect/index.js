@@ -102,7 +102,7 @@ function analyzeResults(results) {
 
     return {mask, noMask, unknown, length}
 }
-
+console.log("HI HI HI");
 async function getFaceData(binaryData) {
     const subKey = process.env['SUBKEY'];
     const uriBase = process.env['ENDPOINT'] + 'face/v1.0/detect'
