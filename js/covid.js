@@ -3,8 +3,8 @@ function init() {
     fetch(endpoint)
         .then(resp => resp.json())
         .then(data => {
-            animateValue("cases", data.Global.TotalConfirmed - 1000, data.Global.TotalConfirmed, 3000, "deaths");
-            animateValue("deaths", data.Global.TotalDeaths - 1000, data.Global.TotalDeaths, 3000, "cases");
+            animateValue("cases", data.Global.TotalConfirmed - 1000, data.Global.TotalConfirmed, 3000, "cases");
+            animateValue("deaths", data.Global.TotalDeaths - 1000, data.Global.TotalDeaths, 3000, "deaths");
         
         })
 }

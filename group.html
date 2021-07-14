@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/group.css">
+    <title>MaskUp</title>
+</head>
+
+<body>
+
+
+    <nav class="navbar navbar-expand-md navbar-light">
+        <a class="navbar-brand bold-blue" href="index.html" style="font-size: 1.6rem">
+            <img src="./img/logo.png" alt="MaskUp Logo" width="80" height="80">
+            MaskUp
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarText">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="detect.html">Detect <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="group.html">Group</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Get Notified</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <section>
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container text-center">
+                <h1 class="display-4 text-center bold-blue">Group Mask Detection</h1>
+
+                <div class="results">
+                    <img src="./img/groupEx.png" alt="group mask example" class="img-fluid" id="example-group">
+
+                </div>
+                <div class="spinner-border text-success hidden" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+
+                <form id="file-form" enctype="multipart/form-data">
+                    <div class="custom-file mt-3 lim-w">
+                        <input type="file" class="custom-file-input" id="file-upload" multiple required>
+                        <label class="custom-file-label text-left" id="filename">Choose file...</label>
+                        <!-- add action for submit -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 bold-blue">
+                  <h3 class="bold">How does group detection work?</h3>
+                  <p class="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                    been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                    and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+                    into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+                    release of Letraset sheets containing Lorem. Lorem Ipsum has been the industry's standard dummy text ever
+                    since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen
+                    book. It has survived not only</p>
+                </div>
+                <div class="col-sm-4">
+                  <div class="box d-flex align-items-center justify-content-center shadow-grey">
+                    <img src="./img/virus.png" alt="virus image" class="img-fluid">
+                  </div>
+                </div>
+              </div>
+        </div>
+    </section>
+
+    <div class="separator"></div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.7/js/tether.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        let spinner = document.querySelector(".spinner-border");
+        let examplePic = document.getElementById("example-group");
+        let fileInput = document.getElementById("file-upload");
+        let resultsContainer = document.querySelector(".results");
+
+        $('#file-upload').on('change', function () {
+            let fileName = $(this).val().split('\\').pop();
+            $(this).next('#filename').addClass("selected").html(fileName);
+
+            resultsContainer.innerHTML = '';
+            spinner.classList.remove("hidden");
+            examplePic.classList.add("hidden");
+
+            const files = fileInput.files;
+
+            for (var i = 0; i < files.length; i++) {
+                let form = document.getElementById("file-form");
+                let payload = new FormData(form);
+                payload.append("file", files[i]);
+
+                const endpoint = "https://facemaskdetector.azurewebsites.net/api/groupMaskDetect?code=3ZrvAC02HXiDDowsxi6/rFqdDYqf5tK9p2ANlyTbDncOcynOm2rkjQ==";
+                const options = {
+                    method: "POST",
+                    body: payload,
+                }
+
+                fetch(endpoint, options)
+                    .then(resp => resp.json())
+                    .then(data => {
+                        spinner.classList.add("hidden");
+                        createImage(data);
+                        console.log(data)
+                    })
+            }
+        });
+
+        function createImage(data) {
+            let result = document.createElement('div');
+
+            let tag = document.createElement("img");
+            tag.src = `data:image/png;base64, ${data.base64Str}`;
+            tag.classList.add("img-fluid", "mb-3");
+
+            let analysis = data.analysis;
+
+            let caption = document.createElement("h3");
+            caption.classList.add("text-center");
+            caption.innerHTML = `Masked: ${analysis.mask} Unmasked: ${analysis.noMask} Unknown: ${analysis.unknown}`
+
+            result.appendChild(tag);
+            result.appendChild(caption);
+
+            resultsContainer.appendChild(result);
+        }
+    </script>
+
+</body>
+
+</html>

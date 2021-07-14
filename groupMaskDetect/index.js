@@ -15,12 +15,15 @@ module.exports = async function (context, req) {
     context.log(parts[0].data)
     let image = await Jimp.read(parts[0].data);
     var result = await getFaceData(parts[0].data);
+    context.log(result.length)
+    let analysis = analyzeResults(result);
 
+    context.log(analysis)
     let base64Str = await manipulateImage(image, result);
 
     context.res = {
         // status: 200, /* Defaults to 200 */
-        body: base64Str
+        body: {base64Str, analysis}
     };
 }
 
@@ -48,7 +51,6 @@ async function manipulateImage(image, result) {
             makeRectangle(image, x, y, width, height, fillYellow);
             // await addText(image, x, textY, "uncertain");
         }
-        console.log(maskStatus)
     }
 
     image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
@@ -79,6 +81,27 @@ function makeIteratorThatFillsWithColor(color) {
   };
 
 
+function analyzeResults(results) {
+    let mask = 0;
+    let noMask = 0;
+    let unknown = 0;
+    let length = results.length;
+
+    for (var i=0; i<length; i++) {
+        let maskStatus = results[i].faceAttributes.mask.type;
+        if (maskStatus === "faceMask") {
+            mask += 1;
+        }
+        else if (maskStatus === "noMask") {
+            noMask += 1;
+        }
+        else {
+            unknown += 1;
+        }
+    }
+
+    return {mask, noMask, unknown, length}
+}
 
 async function getFaceData(binaryData) {
     const subKey = process.env['SUBKEY'];
