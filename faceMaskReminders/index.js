@@ -1,85 +1,73 @@
-const nodemailer = require('nodemailer');
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')(accountSid, authToken);
 const CosmosClient = require("@azure/cosmos").CosmosClient;
 // function has not been deployed yet
 
 
 const config = {
-  endpoint: "https://maskup.documents.azure.com:443/",
-  key: "W95pvoRphhhUnTfrLF5DCTYwlEHnHe3ntIw3ESr9nb1dxuGHle5174ZOlGmS2DqW41qLYg0huktXzNtmZj7VmA==",
+  endpoint: process.env.ENDPOINT,
+  key: process.env.KEY,
   databaseId: "EmailStorer",
   containerId: "emails",
-  partitionKey: {kind: "Hash", paths: ["/emails"]}
+  partitionKey: { kind: "Hash", paths: ["/emails"] }
 }
 
 
 module.exports = async function (context, myTimer) {
+  try {
+    await getEmails();
+  }
+  catch (e) {
+    console.log(e)
+  }
 
-    try {
-      await getEmails();
-    }
-    catch(e) {
-      console.log(e)
-    }
+  return {
+    body: "emails have been sent"
+  }
 
-    return {
-      body: "emails have been sent"
-    }
-    
 };
 
 async function getEmails() {
   let emails = [];
   var { endpoint, key, databaseId, containerId } = config;
-    const client = new CosmosClient({endpoint, key});
-    const database = client.database(databaseId);
-    const container = database.container(containerId);
+  const client = new CosmosClient({ endpoint, key });
+  const database = client.database(databaseId);
+  const container = database.container(containerId);
 
 
-    const querySpec = {
-      query: "SELECT * from c"
-    };
-    
-    // read all items in the Items container
-    const { resources: items } = await container.items
-      .query(querySpec)
-      .fetchAll();
-    
-    items.forEach(item => {
-      emails.push(item.email);
-    });
-    console.log(emails)
+  const querySpec = {
+    query: "SELECT * from c"
+  };
 
-    await sendMail("Time to wash your hands!", emails, "Wash hands!")
+  // read all items in the Items container
+  const { resources: items } = await container.items
+    .query(querySpec)
+    .fetchAll();
 
+  items.forEach(item => {
+    emails.push(item.email);
+  });
+  await sendMail("Time to wash your hands!", emails)
 }
 
+async function sendMail(message, emails) {
+  console.log(emails);
+  console.log(emails.length);
 
-async function sendMail(subject, toList, body) {
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'maskuporg@gmail.com',
-          pass: 'maskup2021'
-        }
-      });
-      
-      var mailOptions = {
-        from: 'maskuporg@gmail.com',
-        to: toList,
-        subject: subject,
-        text: body
-      };
-      
-      transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
+  for (var i = 0; i < emails.length; i++) {
+    const receiveNumber = convertNum(emails[i]);
+    console.log(receiveNumber)
+    client.messages
+      .create({
+        body: message,
+        from: '+18507834852',
+        to: receiveNumber
+      })
+      .then(message => console.log(message.sid));
+  }
 }
 
-
-
-
-
+function convertNum(origNum) {
+  return "+1" + origNum;
+}
