@@ -24,7 +24,15 @@ canvas {
     padding: 2rem;
 }
 
+.box img {
+    height: 100px;
+}
 .bold {
     font-weight: 600;
 }
 
+@media (min-width: 576px) {
+    .middle {
+        margin: 0 1rem;
+    } 
+}
