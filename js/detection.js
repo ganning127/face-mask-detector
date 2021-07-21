@@ -58,4 +58,4 @@ function determineDom(arr) {
 	return maxPrediction
 }
 
-init();
+// init();

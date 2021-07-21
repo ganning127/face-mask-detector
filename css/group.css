@@ -19,3 +19,12 @@
 .jumbotron {
     background-color: var(--bright-blue);
 }
+
+.height-limit-300 {
+    max-height: 300px;
+}
+
+.table {
+    max-width: 500px;
+    margin: 0 auto;
+}

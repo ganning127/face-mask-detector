@@ -49,6 +49,13 @@
                 <div class="results">
                     <img src="./img/groupEx.png" alt="group mask example" class="img-fluid" id="example-group">
 
+                    <!-- <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+                        <div class="col">
+                            <div class="p-3 border bg-light"></div>
+                        </div>
+
+                    </div> -->
+
                 </div>
                 <div class="spinner-border text-success hidden" role="status">
                     <span class="sr-only">Loading...</span>
@@ -61,6 +68,36 @@
                         <!-- add action for submit -->
                     </div>
                 </form>
+
+                <table class="table table-sm mt-4 hidden">
+                    <thead>
+                        <tr>
+                            <th scope="col">Category</th>
+                            <th scope="col">Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-success">
+                            <th scope="row">Mask</th>
+                            <td id="maskCount">Mark</td>
+                        </tr>
+                        <tr class="table-danger">
+                            <th scope="row">No Mask</th>
+                            <td id="noMaskCount">Jacob</td>
+                        </tr>
+
+                        <tr class="table-warning">
+                            <th scope="row">Unknown</th>
+                            <td id="unknownCount">Jacob</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Total People</th>
+                            <td id="totalCount">Jacob</td>
+                        </tr>
+
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
@@ -69,21 +106,27 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 bold-blue">
-                  <h3 class="bold">How does group detection work?</h3>
-                  <p class="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                    been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                    and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
-                    into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-                    release of Letraset sheets containing Lorem. Lorem Ipsum has been the industry's standard dummy text ever
-                    since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen
-                    book. It has survived not only</p>
+                    <h3 class="bold">How does group detection work?</h3>
+                    <p class="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                        Ipsum has
+                        been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                        galley of type
+                        and scrambled it to make a type specimen book. It has survived not only five centuries, but also
+                        the leap
+                        into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s
+                        with the
+                        release of Letraset sheets containing Lorem. Lorem Ipsum has been the industry's standard dummy
+                        text ever
+                        since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
+                        specimen
+                        book. It has survived not only</p>
                 </div>
                 <div class="col-sm-4">
-                  <div class="box d-flex align-items-center justify-content-center shadow-grey">
-                    <img src="./img/virus.png" alt="virus image" class="img-fluid">
-                  </div>
+                    <div class="box d-flex align-items-center justify-content-center shadow-grey">
+                        <img src="./img/virus.png" alt="virus image" class="img-fluid">
+                    </div>
                 </div>
-              </div>
+            </div>
         </div>
     </section>
 
@@ -101,11 +144,44 @@
         let fileInput = document.getElementById("file-upload");
         let resultsContainer = document.querySelector(".results");
 
+        let total = 0;
+        let totalMask = 0;
+        let totalUnmask = 0;
+        let totalUnknown = 0;
+
         $('#file-upload').on('change', function () {
+            total = 0;
+            totalMask = 0;
+            totalUnmask = 0;
+            totalUnknown = 0;
+            document.getElementById("maskCount").innerHTML = totalMask
+            document.getElementById("noMaskCount").innerHTML = totalUnmask
+            document.getElementById("unknownCount").innerHTML = totalUnknown
+            document.getElementById("totalCount").innerHTML = totalMask + totalUnmask + totalUnknown;
+
+            /*
+ <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+                        <div class="col">
+                            <div class="p-3 border bg-light"></div>
+                        </div>
+
+                    </div>
+
+
+            */
+
+
             let fileName = $(this).val().split('\\').pop();
             $(this).next('#filename').addClass("selected").html(fileName);
 
             resultsContainer.innerHTML = '';
+
+            let resultsRow = document.createElement("div");
+            resultsRow.classList.add("row", "row-cols-2", "row-cols-lg-4", "g-2", "g-lg-3");
+
+            resultsContainer.appendChild(resultsRow);
+
+
             spinner.classList.remove("hidden");
             examplePic.classList.add("hidden");
 
@@ -125,30 +201,63 @@
                 fetch(endpoint, options)
                     .then(resp => resp.json())
                     .then(data => {
+
+                        createImage(data, resultsRow);
+
+
+
+                        document.getElementById("maskCount").innerHTML = totalMask
+                        document.getElementById("noMaskCount").innerHTML = totalUnmask
+                        document.getElementById("unknownCount").innerHTML = totalUnknown
+                        document.getElementById("totalCount").innerHTML = totalMask + totalUnmask + totalUnknown;
+
                         spinner.classList.add("hidden");
-                        createImage(data);
-                        console.log(data)
+                        document.querySelector(".table").classList.remove("hidden");
+
                     })
+
+
             }
         });
 
-        function createImage(data) {
+        function createImage(data, resultsRow) {
+
+            console.log(data)
             let result = document.createElement('div');
 
             let tag = document.createElement("img");
             tag.src = `data:image/png;base64, ${data.base64Str}`;
-            tag.classList.add("img-fluid", "mb-3");
+            tag.classList.add("img-fluid", "mb-3", "height-limit-300");
 
             let analysis = data.analysis;
 
-            let caption = document.createElement("h3");
+            totalMask += parseInt(analysis.mask);
+            totalUnmask += parseInt(analysis.noMask);
+            totalUnknown += parseInt(analysis.unknown);
+
+            // <div class="col">
+            //     <div class="p-3 border bg-light">Row column</div>
+            // </div>
+
+            let caption = document.createElement("p");
             caption.classList.add("text-center");
             caption.innerHTML = `Masked: ${analysis.mask} Unmasked: ${analysis.noMask} Unknown: ${analysis.unknown}`
 
             result.appendChild(tag);
             result.appendChild(caption);
 
-            resultsContainer.appendChild(result);
+
+            let column = document.createElement("div");
+            column.classList.add("col");
+
+            let rowColumn = document.createElement("div");
+            rowColumn.classList.add("p-3", "border", "bg-light");
+
+            rowColumn.appendChild(result);
+
+            column.appendChild(rowColumn);
+
+            resultsRow.appendChild(column);
         }
     </script>
 
