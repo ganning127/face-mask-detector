@@ -79,25 +79,26 @@
                     <tbody>
                         <tr class="table-success">
                             <th scope="row">Mask</th>
-                            <td id="maskCount">Mark</td>
+                            <td id="maskCount">TEST</td>
                         </tr>
                         <tr class="table-danger">
                             <th scope="row">No Mask</th>
-                            <td id="noMaskCount">Jacob</td>
+                            <td id="noMaskCount">TEST</td>
                         </tr>
 
                         <tr class="table-warning">
                             <th scope="row">Unknown</th>
-                            <td id="unknownCount">Jacob</td>
+                            <td id="unknownCount">TEST</td>
                         </tr>
 
                         <tr>
                             <th scope="row">Total People</th>
-                            <td id="totalCount">Jacob</td>
+                            <td id="totalCount">TEST</td>
                         </tr>
 
                     </tbody>
                 </table>
+                <button id="export" class="hover-effect hidden">Export HTML table to CSV file</button>
             </div>
         </div>
     </section>
@@ -107,19 +108,16 @@
             <div class="row">
                 <div class="col-sm-8 bold-blue">
                     <h3 class="bold">How does group detection work?</h3>
-                    <p class="mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                        Ipsum has
-                        been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                        galley of type
-                        and scrambled it to make a type specimen book. It has survived not only five centuries, but also
-                        the leap
-                        into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s
-                        with the
-                        release of Letraset sheets containing Lorem. Lorem Ipsum has been the industry's standard dummy
-                        text ever
-                        since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
-                        specimen
-                        book. It has survived not only</p>
+                    <p class="mt-4">Group Mask Detection is made possible with Microsoft's Face API and Jimp.</p>
+                    <ol>
+                        <li>User submits a picture on the MaskUp website.</li>
+                        <li>Picture is sent to the Microsoft Face API, which detects the coordinates of each face, and
+                            whether or not they have a mask on.</li>
+                        <li>Using an npm package (Jimp), we are able to place rectanbles around each face that is
+                            detected</li>
+                        <li>All results are stored in a table that is shown to the user at the end of detection cycle.
+                        </li>
+                    </ol>
                 </div>
                 <div class="col-sm-4">
                     <div class="box d-flex align-items-center justify-content-center shadow-grey">
@@ -129,6 +127,7 @@
             </div>
         </div>
     </section>
+
 
     <div class="separator"></div>
 
@@ -213,6 +212,7 @@
 
                         spinner.classList.add("hidden");
                         document.querySelector(".table").classList.remove("hidden");
+                        document.getElementById("export").classList.remove("hidden");
 
                     })
 
@@ -259,6 +259,58 @@
 
             resultsRow.appendChild(column);
         }
+
+
+
+
+        function download_csv(csv, filename) {
+            var csvFile;
+            var downloadLink;
+
+            // CSV FILE
+            csvFile = new Blob([csv], { type: "text/csv" });
+
+            // Download link
+            downloadLink = document.createElement("a");
+
+            // File name
+            downloadLink.download = filename;
+
+            // We have to create a link to the file
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+
+            // Make sure that the link is not displayed
+            downloadLink.style.display = "none";
+
+            // Add the link to your DOM
+            document.body.appendChild(downloadLink);
+
+            // Lanzamos
+            downloadLink.click();
+        }
+
+        function export_table_to_csv(html, filename) {
+            var csv = [];
+            var rows = document.querySelectorAll("table tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var row = [], cols = rows[i].querySelectorAll("td, th");
+
+                for (var j = 0; j < cols.length; j++)
+                    row.push(cols[j].innerText);
+
+                csv.push(row.join(","));
+            }
+
+            // Download CSV
+            download_csv(csv.join("\n"), filename);
+        }
+
+        document.querySelector("#export").addEventListener("click", function () {
+            var html = document.querySelector("table").outerHTML;
+            export_table_to_csv(html, "maskup_stats.csv");
+        });
+
     </script>
 
 </body>
