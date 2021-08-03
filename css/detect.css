@@ -36,3 +36,8 @@ canvas {
         margin: 0 1rem;
     } 
 }
+
+
+.toast img {
+    max-height: 10px;
+}

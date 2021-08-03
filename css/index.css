@@ -42,3 +42,9 @@
     border-radius: 20px;
     overflow: hidden;
 }
+.card-title {
+    color: var(--bold-blue);
+}
+.card-text {
+    color: var(--faded-blue);
+}

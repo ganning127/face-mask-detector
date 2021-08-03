@@ -5,6 +5,9 @@ let resultToMessage = {
 	"mask": "Mask Detected ✅"
 }
 
+let placeholder = document.getElementById("placeholder-img");
+let spinner = document.querySelector(".spinner-grow");
+
 let model, webcam, labelContainer, maxPredictions;
 let started = false;
 
@@ -23,6 +26,7 @@ async function init() {
 
 	try {
 		document.getElementById("placeholder-img").remove()
+		spinner.classList.add("hidden");
 	}
 	catch {
 		console.log("already started once")
@@ -93,11 +97,6 @@ window.setInterval(() => {
 			}
 
 		}
-
-
-
-
-
 	}
 
 }, 1000)
@@ -110,6 +109,18 @@ function detect(event) {
 	started = true;
 
 	console.log("starting...")
+	spinner.classList.remove("hidden");
+	placeholder.classList.add('hidden');
 	init();
 
 }
+
+let webhookInput = document.getElementById('url');
+
+webhookInput.addEventListener('input', () => {
+	console.log("HERE")
+	$('.toast').toast({
+		delay: 3000
+	})
+		.toast('show')
+})

@@ -96,3 +96,7 @@ nav li a {
         margin-top: 1.5rem;
     }
 }
+
+.cpy {
+    background-color: var(--bright-blue) !important;
+}
