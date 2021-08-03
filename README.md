@@ -3,6 +3,7 @@ With more than 20 million cases and 4 million deaths, the Covid-19 pandemic is a
 
 ### ⚡ Current Features:
 - Live mask detection (tensorflow.js)
+- Custom webhook endpoints for live detection results
 - Group mask detection (microsoft azure)
 - Data exporting (from group detection stats)
 - Hand washing reminders (http trigger and twilio)
